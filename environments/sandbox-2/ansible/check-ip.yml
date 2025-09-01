@@ -1,0 +1,7 @@
+- name: Get server IP addresses
+  hosts: all
+  gather_facts: yes
+  tasks:
+    - name: Show default IPv4 address
+      debug:
+        var: ansible_default_ipv4.address
