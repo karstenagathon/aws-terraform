@@ -1,11 +1,11 @@
 output "bastion_public_ip" {
   description = "Public IP of the bastion host"
-  value       = module.bastion.public_ip
+  value       = module.bastion.public_ip != null ? module.bastion.public_ip : ""
 }
 
 output "bastion_private_ip" {
   description = "Private IP of the bastion host"
-  value       = module.bastion.private_ip
+  value       = module.bastion.private_ip != null ? module.bastion.private_ip : ""
 }
 
 output "bastion_security_group_id" {
@@ -25,5 +25,5 @@ output "private_key_filename" {
 
 output "ssh_command" {
   description = "SSH command to connect to the bastion host"
-  value       = "ssh -i ${local_file.private_key.filename} ec2-user@${module.bastion.public_ip}"
+  value       = module.bastion.public_ip != null ? "ssh -i ${local_file.private_key.filename} ec2-user@${module.bastion.public_ip}" : "Bastion instance is disabled"
 }

@@ -1,6 +1,6 @@
 output "server_private_ip" {
   description = "Private IP of the resource server"
-  value       = module.server.private_ip
+  value       = module.server.private_ip != null ? module.server.private_ip : ""
 }
 
 output "server_security_group_id" {
@@ -20,5 +20,5 @@ output "private_key_filename" {
 
 output "ssh_command" {
   description = "SSH command to connect to the resource server host via private ip"
-  value       = "ssh -i ${local_file.private_key.filename} ec2-user@${module.server.private_ip}"
+  value       = module.server.private_ip != null ? "ssh -i ${local_file.private_key.filename} ec2-user@${module.server.private_ip}" : "Server instance is disabled"
 }
